@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: ["main", "develop", "feature/**"]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: blogdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U postgres -d blogdb"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      PORT: 3000
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/blogdb?schema=public
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - run: npm ci
+
+      - run: npx prisma generate
+
+      # Em CI, preferir deploy (não interativo) para migrations
+      - run: npx prisma migrate deploy
+
+      - run: npm run test:coverage
+
+      # Garantir que build do Docker não quebre (requisito Dockerfiles)
+      - run: docker build -t blogeducamais-techchallenge-fase02 .
