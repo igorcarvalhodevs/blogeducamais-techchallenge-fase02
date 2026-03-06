@@ -314,6 +314,22 @@ O relatório técnico detalhado encontra-se em:
 
 ---
 
+## 🎥 Demonstração da Aplicação
+
+Este vídeo apresenta uma demonstração do funcionamento da API REST
+desenvolvida para o projeto BlogEducaMais, incluindo:
+
+- Listagem de postagens
+- Busca por palavras-chave
+- Criação de postagens (perfil professor)
+- Edição de postagens (perfil professor)
+- Exclusão de postagens (perfil professor)
+
+📺 Assista ao vídeo:
+https://www.youtube.com/watch?v=tTGK9wcJaos
+
+---
+
 ### Equipe do Projeto (Tech Challenge)
 
 Projeto desenvolvido para fins acadêmicos e portfólio, com foco em arquitetura lógica, segurança e organização de sistemas.
